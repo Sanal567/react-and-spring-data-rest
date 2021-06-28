@@ -2,26 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 class App extends React.Component {
-
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = { employees: [] };
   }
 
   componentDidMount() {
-
     fetch("/api/employees")
-      .then((response) => response.json())
-      .then((emps) => {
-        console.log("employees", emps);
-        this.setState({ employees: emps._embedded.employees });
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseInJSONFormat) => {
+        this.setState({ employees: responseInJSONFormat._embedded.employees });
       });
   }
 
   render() {
     return (
-      <div>{this.employees}</div>
-      // <EmployeeList employees={this.state.employees}/>
+      <div>
+        <span> Welcome to React + Spring Boot</span>
+        <EmployeeList employees={this.state.employees} />
+      </div>
     );
   }
 }
